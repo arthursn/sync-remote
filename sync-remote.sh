@@ -16,7 +16,7 @@ function dirnames {
     fi
 }
 
-make_include_string() {
+function make_include_string {
     include_str=""
     dirs=()
     for f in $@; do
@@ -31,7 +31,7 @@ make_include_string() {
     echo $include_str
 }
 
-update() {
+function update {
     echo "Updating sync-remote"
     target=$1
     wget https://raw.githubusercontent.com/arthursn/sync-remote/master/sync-remote.sh -O "$target"
@@ -39,7 +39,7 @@ update() {
     echo "sync-remote updated!"
 }
 
-sync() {
+function sync {
     # Parse remote path (remote:remote_dir)
     IFS=':' read -ra arr <<<"$2"
     remote="${arr[0]}"
@@ -73,24 +73,28 @@ sync() {
     esac
 }
 
-usage() {
+function usage {
     echo "Usage: sync-remote [push pull] [remote:remote_dir]"
     exit 1
 }
 
-case $1 in
-push)
-    sync $@
-    exit $?
-    ;;
-pull)
-    sync $@
-    exit $?
-    ;;
-update)
-    update $0
-    ;;
-*)
-    usage
-    ;;
-esac
+function main {
+    case $1 in
+    push)
+        sync $@
+        exit $?
+        ;;
+    pull)
+        sync $@
+        exit $?
+        ;;
+    update)
+        update $0
+        ;;
+    *)
+        usage
+        ;;
+    esac
+}
+
+main
