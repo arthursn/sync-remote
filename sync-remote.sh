@@ -78,23 +78,19 @@ function usage {
     exit 1
 }
 
-function main {
-    case $1 in
-    push)
-        sync $@
-        exit $?
-        ;;
-    pull)
-        sync $@
-        exit $?
-        ;;
-    update)
-        update $0
-        ;;
-    *)
-        usage
-        ;;
-    esac
-}
-
-main
+case $1 in
+push)
+    sync $@
+    exit $?
+    ;;
+pull)
+    sync $@
+    exit $?
+    ;;
+update)
+    update $0
+    ;;
+*)
+    usage
+    ;;
+esac
